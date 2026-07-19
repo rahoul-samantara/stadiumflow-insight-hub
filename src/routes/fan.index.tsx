@@ -24,6 +24,7 @@ import { useCrowdData } from "@/hooks/useCrowdData";
 import { generateFanRecommendations } from "@/services/groq";
 import { useEffect, useState } from "react";
 import { AlertTriangle } from "lucide-react";
+import { MatchPredictorWidget } from "@/components/MatchPredictorWidget";
 
 export const Route = createFileRoute("/fan/")({
   component: FanDashboard,
@@ -260,6 +261,10 @@ function FanDashboard() {
             </ul>
           </CardContent>
         </Card>
+      </section>
+
+      <section>
+        <MatchPredictorWidget />
       </section>
     </div>
   );
