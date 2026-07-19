@@ -77,11 +77,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "StadiumFlow AI — Smart FIFA 2026 Match Experience" },
+      {
+        name: "description",
+        content:
+          "AI-powered match journey assistant for FIFA World Cup 2026 — smart navigation, crowd intelligence, and multilingual fan support.",
+      },
+      { name: "author", content: "StadiumFlow AI" },
+      { property: "og:title", content: "StadiumFlow AI — FIFA 2026 Match Assistant" },
+      {
+        property: "og:description",
+        content:
+          "Navigate the stadium, beat the crowds, and get live AI recommendations on match day.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
@@ -119,8 +127,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <AuthProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
