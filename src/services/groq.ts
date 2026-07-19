@@ -158,3 +158,83 @@ export async function generateFanRecommendations(
     return [];
   }
 }
+
+export interface MatchPrediction {
+  matchId: string;
+  teamA: string;
+  teamB: string;
+  time: string;
+  winProbabilityA: number;
+  winProbabilityB: number;
+  predictedWinner: string;
+}
+
+/**
+ * Uses Groq LLM to predict upcoming match results dynamically.
+ * This demonstrates advanced GenAI integration without relying on paid APIs.
+ */
+export async function generateMatchPredictions(): Promise<MatchPrediction[]> {
+  if (!hasGroqKey()) {
+    // Return mock data if API key is missing to prevent breaking UI
+    return [
+      {
+        matchId: "m1",
+        teamA: "Argentina",
+        teamB: "France",
+        time: "18:00",
+        winProbabilityA: 55,
+        winProbabilityB: 45,
+        predictedWinner: "Argentina",
+      },
+      {
+        matchId: "m2",
+        teamA: "Brazil",
+        teamB: "England",
+        time: "21:00",
+        winProbabilityA: 51,
+        winProbabilityB: 49,
+        predictedWinner: "Brazil",
+      },
+    ];
+  }
+
+  const groq = getGroqClient();
+  const systemPrompt = `You are a FIFA World Cup Sports Analyst AI.
+Output a JSON array of exactly 3 upcoming fictional but realistic World Cup 2026 matches.
+For each match, include:
+- "matchId": a unique string
+- "teamA": String name of Team A
+- "teamB": String name of Team B
+- "time": String match time (e.g., "18:00")
+- "winProbabilityA": Integer between 1 and 99 representing win probability
+- "winProbabilityB": Integer (must be 100 - winProbabilityA)
+- "predictedWinner": String name of the team with higher probability
+
+Return ONLY valid JSON. No markdown formatting or extra text. Example:
+[
+  { "matchId": "1", "teamA": "USA", "teamB": "Mexico", "time": "15:00", "winProbabilityA": 45, "winProbabilityB": 55, "predictedWinner": "Mexico" }
+]
+`;
+
+  try {
+    const response = await groq.chat.completions.create({
+      messages: [{ role: "system", content: systemPrompt }],
+      model: MODEL_NAME,
+      temperature: 0.7,
+      response_format: { type: "json_object" },
+    });
+
+    const text = response.choices[0]?.message?.content || "{}";
+
+    // The model might return `{ "matches": [...] }` or `[...]`. Let's handle both.
+    const parsed = JSON.parse(text);
+    if (Array.isArray(parsed)) return parsed;
+    if (parsed.matches && Array.isArray(parsed.matches)) return parsed.matches;
+
+    // Fallback if parsing fails structurally but we know it's JSON object
+    return Object.values(parsed).find(Array.isArray) || [];
+  } catch (error) {
+    console.error("Failed to fetch match predictions:", error);
+    return [];
+  }
+}
