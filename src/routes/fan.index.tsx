@@ -8,12 +8,10 @@ import {
   MapPinned,
   Sparkles,
   Ticket,
-  Utensils,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CrowdBadge } from "@/components/CrowdBadge";
 import { MetricCard } from "@/components/MetricCard";
 import { getBadgeVariantForStatus } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
@@ -24,8 +22,8 @@ import {
 } from "@/data/mockData";
 import { useCrowdData } from "@/hooks/useCrowdData";
 import { generateFanRecommendations } from "@/services/groq";
-import { AlertTriangle } from "lucide-react";
 import { useEffect, useState } from "react";
+import { AlertTriangle } from "lucide-react";
 
 export const Route = createFileRoute("/fan/")({
   component: FanDashboard,
@@ -69,8 +67,8 @@ function FanDashboard() {
   }, [crowdData.isLive]);
 
   // Determine if there are high crowd conditions
-  const hasHighCrowd = 
-    crowdData.gates.some((g) => g.status === "High" || g.status === "Critical") || 
+  const hasHighCrowd =
+    crowdData.gates.some((g) => g.status === "High" || g.status === "Critical") ||
     crowdData.zones.some((z) => z.status === "High" || z.status === "Critical");
 
   // Get data for MetricCards based on recommended gate
@@ -78,9 +76,10 @@ function FanDashboard() {
   const recommendedGateData = crowdData.gates.find((g) => g.id === gateToUse);
   const waitTime = recommendedGateData ? recommendedGateData.waitTime : 3;
   const previousWaitTime = recommendedGateData ? waitTime + 3 : 6;
-  const trend = waitTime < previousWaitTime 
-    ? `↓ ${waitTime} min vs ${previousWaitTime} min ago` 
-    : `↑ ${waitTime} min vs ${previousWaitTime} min ago`;
+  const trend =
+    waitTime < previousWaitTime
+      ? `↓ ${waitTime} min vs ${previousWaitTime} min ago`
+      : `↑ ${waitTime} min vs ${previousWaitTime} min ago`;
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
@@ -101,9 +100,7 @@ function FanDashboard() {
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-0.5 text-xs font-medium ring-1 ring-white/20">
             <Sparkles className="size-3.5" aria-hidden /> Live match day
           </span>
-          <h2 className="mt-3 text-2xl font-semibold md:text-3xl">
-            Welcome back, {firstName}.
-          </h2>
+          <h2 className="mt-3 text-2xl font-semibold md:text-3xl">Welcome back, {firstName}.</h2>
           <p className="mt-1 text-sm text-white/85">
             Your AI-guided journey to {upcomingMatch.home} vs {upcomingMatch.away} is ready.
           </p>
@@ -115,7 +112,7 @@ function FanDashboard() {
           <CardContent className="p-6">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <Badge 
+                <Badge
                   variant={getBadgeVariantForStatus(recommendedGateData?.status)}
                   className="font-medium mb-2"
                 >
@@ -149,7 +146,11 @@ function FanDashboard() {
                 icon={<DoorOpen className="size-4" />}
                 label="Entry gate"
                 value={gateToUse}
-                hint={recommendedGateData?.status === "Low" ? "Recommended · low crowd" : "Your assigned gate"}
+                hint={
+                  recommendedGateData?.status === "Low"
+                    ? "Recommended · low crowd"
+                    : "Your assigned gate"
+                }
               />
             </div>
             <div className="mt-5 flex flex-wrap gap-2">
@@ -246,10 +247,7 @@ function FanDashboard() {
                 </div>
               )}
               {recommendations.map((r) => (
-                <li
-                  key={r.id}
-                  className="rounded-lg border border-border/60 bg-background p-3"
-                >
+                <li key={r.id} className="rounded-lg border border-border/60 bg-background p-3">
                   <div className="flex items-center justify-between gap-2">
                     <p className="text-sm font-semibold">{r.title}</p>
                     <span className="text-[10px] uppercase tracking-wider text-muted-foreground">

@@ -19,11 +19,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CrowdBadge } from "@/components/CrowdBadge";
 import { MetricCard } from "@/components/MetricCard";
 import { RequireRole } from "@/components/RequireRole";
-import {
-  hourlyArrivals,
-  organizerAlerts,
-  attendanceMetric,
-} from "@/data/mockData";
+import { hourlyArrivals, organizerAlerts, attendanceMetric } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/organizer")({
@@ -42,9 +38,13 @@ function OrganizerPage() {
   const { zones, gates } = useCrowdData();
   const { summary, isLoading: aiLoading, refresh: refreshAI } = useOperationalAI();
 
-  const avgWaitMin = gates.length > 0 ? Math.round(gates.reduce((acc, g) => acc + g.waitTime, 0) / gates.length) : attendanceMetric.avgWaitMin;
-  const avgDensity = zones.length > 0 ? zones.reduce((acc, z) => acc + z.density, 0) / zones.length : 0;
-  
+  const avgWaitMin =
+    gates.length > 0
+      ? Math.round(gates.reduce((acc, g) => acc + g.waitTime, 0) / gates.length)
+      : attendanceMetric.avgWaitMin;
+  const avgDensity =
+    zones.length > 0 ? zones.reduce((acc, z) => acc + z.density, 0) / zones.length : 0;
+
   const current = Math.round(attendanceMetric.capacity * (avgDensity / 100));
   const capacity = attendanceMetric.capacity;
   const gateOccupancyPct = Math.round(avgDensity);
@@ -140,11 +140,20 @@ function OrganizerPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div className="grid size-8 place-items-center rounded-lg bg-primary/10 text-primary">
-                      {aiLoading ? <Loader2 className="size-4 animate-spin" /> : <Bot className="size-4" aria-hidden />}
+                      {aiLoading ? (
+                        <Loader2 className="size-4 animate-spin" />
+                      ) : (
+                        <Bot className="size-4" aria-hidden />
+                      )}
                     </div>
                     <h3 className="text-base font-semibold">AI operational summary</h3>
                   </div>
-                  <Button variant="outline" size="sm" onClick={() => refreshAI()} disabled={aiLoading}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => refreshAI()}
+                    disabled={aiLoading}
+                  >
                     <RefreshCw className={cn("mr-2 size-4", aiLoading && "animate-spin")} />
                     Refresh
                   </Button>
@@ -174,19 +183,22 @@ function OrganizerPage() {
                   <span className="text-xs text-muted-foreground">Live heatmap</span>
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
-                  {zones.concat(zones).slice(0, 12).map((z, i) => (
-                    <div
-                      key={`${z.id}-${i}`}
-                      className={cn(
-                        "aspect-square rounded-md",
-                        z.status === "Low" && "bg-success/40",
-                        z.status === "Medium" && "bg-warning/60",
-                        z.status === "High" && "bg-destructive/60",
-                        z.status === "Critical" && "bg-destructive/80",
-                      )}
-                      title={`${z.name}: ${z.density}%`}
-                    />
-                  ))}
+                  {zones
+                    .concat(zones)
+                    .slice(0, 12)
+                    .map((z, i) => (
+                      <div
+                        key={`${z.id}-${i}`}
+                        className={cn(
+                          "aspect-square rounded-md",
+                          z.status === "Low" && "bg-success/40",
+                          z.status === "Medium" && "bg-warning/60",
+                          z.status === "High" && "bg-destructive/60",
+                          z.status === "Critical" && "bg-destructive/80",
+                        )}
+                        title={`${z.name}: ${z.density}%`}
+                      />
+                    ))}
                 </div>
                 <div className="mt-5 space-y-2">
                   {zones.map((z) => (
@@ -196,9 +208,7 @@ function OrganizerPage() {
                     >
                       <div>
                         <p className="text-sm font-semibold">{z.name}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {z.density}% occupancy
-                        </p>
+                        <p className="text-xs text-muted-foreground">{z.density}% occupancy</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="hidden h-1.5 w-32 overflow-hidden rounded-full bg-muted sm:block">
@@ -210,12 +220,12 @@ function OrganizerPage() {
                                 z.status === "Low"
                                   ? "var(--success)"
                                   : z.status === "Medium"
-                                  ? "var(--warning)"
-                                  : "var(--destructive)",
+                                    ? "var(--warning)"
+                                    : "var(--destructive)",
                             }}
                           />
                         </div>
-                        <CrowdBadge level={z.status.toLowerCase() as any} />
+                        <CrowdBadge level={z.status.toLowerCase() as unknown} />
                       </div>
                     </div>
                   ))}
@@ -228,10 +238,7 @@ function OrganizerPage() {
                 <h3 className="text-base font-semibold">Recent alerts</h3>
                 <ul className="mt-4 space-y-3">
                   {organizerAlerts.map((a) => (
-                    <li
-                      key={a.id}
-                      className="rounded-lg border border-border/60 bg-background p-3"
-                    >
+                    <li key={a.id} className="rounded-lg border border-border/60 bg-background p-3">
                       <div className="flex items-center justify-between gap-2">
                         <p className="text-sm font-semibold">{a.zone}</p>
                         <span
@@ -241,8 +248,7 @@ function OrganizerPage() {
                               "bg-destructive/10 text-destructive ring-destructive/20",
                             a.severity === "warning" &&
                               "bg-warning/15 text-foreground ring-warning/30",
-                            a.severity === "info" &&
-                              "bg-primary/10 text-primary ring-primary/20",
+                            a.severity === "info" && "bg-primary/10 text-primary ring-primary/20",
                           )}
                         >
                           {a.severity}

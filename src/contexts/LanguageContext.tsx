@@ -2,7 +2,14 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import type { Language } from "@/types";
 import { useAuth } from "@/contexts/AuthContext";
 
-const availableLanguages: Language[] = ["English", "Spanish", "Portuguese", "French", "Arabic", "Hindi"];
+const availableLanguages: Language[] = [
+  "English",
+  "Spanish",
+  "Portuguese",
+  "French",
+  "Arabic",
+  "Hindi",
+];
 
 interface LanguageState {
   language: Language;
@@ -15,7 +22,8 @@ const STORAGE_KEY = "stadiumflow.language";
 
 function getInitialLanguage(): Language {
   try {
-    const stored = typeof window !== "undefined" ? window.localStorage.getItem(STORAGE_KEY) as Language : null;
+    const stored =
+      typeof window !== "undefined" ? (window.localStorage.getItem(STORAGE_KEY) as Language) : null;
     if (stored && availableLanguages.includes(stored)) {
       return stored;
     }

@@ -7,7 +7,7 @@ export interface ZoneData {
   id: string;
   name: string;
   density: number; // 0-100
-  status: 'Low' | 'Medium' | 'High' | 'Critical';
+  status: "Low" | "Medium" | "High" | "Critical";
 }
 
 /**
@@ -17,7 +17,7 @@ export interface GateData {
   id: string;
   name: string;
   waitTime: number; // in minutes
-  status: 'Low' | 'Medium' | 'High' | 'Critical';
+  status: "Low" | "Medium" | "High" | "Critical";
 }
 
 /**
@@ -34,45 +34,45 @@ class CrowdSimulator {
   private timer: number | null = null;
   private subscribers: Set<Subscriber> = new Set();
   private subscriberCount = 0;
-  
+
   private zones: ZoneData[] = [
-    { id: 'z-north', name: 'North Concourse', density: 30, status: 'Low' },
-    { id: 'z-south', name: 'South Concourse', density: 45, status: 'Medium' },
-    { id: 'z-east', name: 'East Concourse', density: 20, status: 'Low' },
-    { id: 'z-west', name: 'West Concourse', density: 80, status: 'High' },
-    { id: 'z-fan', name: 'Fan Zone', density: 60, status: 'Medium' },
+    { id: "z-north", name: "North Concourse", density: 30, status: "Low" },
+    { id: "z-south", name: "South Concourse", density: 45, status: "Medium" },
+    { id: "z-east", name: "East Concourse", density: 20, status: "Low" },
+    { id: "z-west", name: "West Concourse", density: 80, status: "High" },
+    { id: "z-fan", name: "Fan Zone", density: 60, status: "Medium" },
   ];
 
   private gates: GateData[] = [
-    { id: 'g-A', name: 'Gate A', waitTime: 5, status: 'Low' },
-    { id: 'g-B', name: 'Gate B', waitTime: 12, status: 'Medium' },
-    { id: 'g-C', name: 'Gate C', waitTime: 25, status: 'High' },
-    { id: 'g-D', name: 'Gate D', waitTime: 3, status: 'Low' },
+    { id: "g-A", name: "Gate A", waitTime: 5, status: "Low" },
+    { id: "g-B", name: "Gate B", waitTime: 12, status: "Medium" },
+    { id: "g-C", name: "Gate C", waitTime: 25, status: "High" },
+    { id: "g-D", name: "Gate D", waitTime: 3, status: "Low" },
   ];
 
   private updateState() {
     const time = Date.now();
-    
+
     this.zones = this.zones.map((zone, index) => {
       const variation = Math.sin(time / 10000 + index) * 10;
-      let newDensity = Math.max(0, Math.min(100, zone.density + variation));
-      
-      let status: ZoneData['status'] = 'Low';
-      if (newDensity > 85) status = 'Critical';
-      else if (newDensity > 65) status = 'High';
-      else if (newDensity > 40) status = 'Medium';
+      const newDensity = Math.max(0, Math.min(100, zone.density + variation));
+
+      let status: ZoneData["status"] = "Low";
+      if (newDensity > 85) status = "Critical";
+      else if (newDensity > 65) status = "High";
+      else if (newDensity > 40) status = "Medium";
 
       return { ...zone, density: Math.round(newDensity), status };
     });
 
     this.gates = this.gates.map((gate, index) => {
       const variation = Math.cos(time / 15000 + index) * 5;
-      let newWait = Math.max(0, Math.min(60, gate.waitTime + variation));
-      
-      let status: GateData['status'] = 'Low';
-      if (newWait > 30) status = 'Critical';
-      else if (newWait > 20) status = 'High';
-      else if (newWait > 10) status = 'Medium';
+      const newWait = Math.max(0, Math.min(60, gate.waitTime + variation));
+
+      let status: GateData["status"] = "Low";
+      if (newWait > 30) status = "Critical";
+      else if (newWait > 20) status = "High";
+      else if (newWait > 10) status = "Medium";
 
       return { ...gate, waitTime: Math.round(newWait), status };
     });
@@ -82,7 +82,7 @@ class CrowdSimulator {
 
   private notifySubscribers() {
     const snapshot = this.getSnapshot();
-    this.subscribers.forEach(sub => sub(snapshot));
+    this.subscribers.forEach((sub) => sub(snapshot));
   }
 
   public subscribe(fn: Subscriber) {
@@ -139,10 +139,10 @@ export interface GateRecommendation {
 export function getGateRecommendation(userSeat: UserSeat): GateRecommendation {
   const snapshot = crowdSimulator.getSnapshot();
   const sectionStart = userSeat.section.charAt(0).toUpperCase();
-  let baseGateId = 'g-A';
-  if (sectionStart === 'S') baseGateId = 'g-B';
-  else if (sectionStart === 'E') baseGateId = 'g-C';
-  else if (sectionStart === 'W') baseGateId = 'g-D';
+  let baseGateId = "g-A";
+  if (sectionStart === "S") baseGateId = "g-B";
+  else if (sectionStart === "E") baseGateId = "g-C";
+  else if (sectionStart === "W") baseGateId = "g-D";
 
   let bestGate = snapshot.gates[0];
   let bestScore = Infinity;
@@ -151,7 +151,7 @@ export function getGateRecommendation(userSeat: UserSeat): GateRecommendation {
   for (const gate of snapshot.gates) {
     const walkTime = gate.id === baseGateId ? 5 : 15;
     const score = gate.waitTime + walkTime;
-    
+
     if (score < bestScore) {
       bestScore = score;
       bestGate = gate;
@@ -165,9 +165,10 @@ export function getGateRecommendation(userSeat: UserSeat): GateRecommendation {
     estimatedWaitTime: bestGate.waitTime,
     walkTime: walkTimeForBest,
     totalTime: bestScore,
-    reason: bestGate.id === baseGateId 
-      ? 'Closest gate to your section with reasonable wait time.' 
-      : 'Redirected to a faster gate due to high traffic at your closest gate.'
+    reason:
+      bestGate.id === baseGateId
+        ? "Closest gate to your section with reasonable wait time."
+        : "Redirected to a faster gate due to high traffic at your closest gate.",
   };
 }
 

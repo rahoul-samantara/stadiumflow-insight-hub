@@ -80,4 +80,3 @@ export interface CrowdStatus {
   waitTime: number;
   trend: "rising" | "falling" | "stable";
 }
-

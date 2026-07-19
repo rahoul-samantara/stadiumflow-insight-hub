@@ -1,12 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Bot,
-  Globe2,
-  MapPinned,
-  ShieldCheck,
-  Sparkles,
-  Users,
-} from "lucide-react";
+import { Bot, Globe2, MapPinned, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -160,9 +153,7 @@ function LandingPage() {
           <div className="grid gap-6 md:grid-cols-3">
             <Card className="bg-white/10 border-none text-white backdrop-blur">
               <CardContent className="flex flex-col items-center justify-center p-8">
-                <div className="text-5xl font-bold tracking-tighter text-[#d1a842]">
-                  326
-                </div>
+                <div className="text-5xl font-bold tracking-tighter text-[#d1a842]">326</div>
                 <div className="mt-2 text-sm font-medium uppercase tracking-widest text-white/80">
                   Days Until Kickoff
                 </div>
@@ -201,7 +192,9 @@ function LandingPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 text-xs text-muted-foreground md:flex-row md:px-8">
           <p>© 2026 StadiumFlow AI · Prototype for FIFA World Cup 2026</p>
           <div className="flex gap-4">
-            <Link to="/login" className="hover:text-foreground">Sign in</Link>
+            <Link to="/login" className="hover:text-foreground">
+              Sign in
+            </Link>
           </div>
         </div>
       </footer>

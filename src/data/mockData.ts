@@ -119,7 +119,12 @@ export const journeyTimeline: TimelineEvent[] = [
   { id: "t1", time: "5:30 PM", title: "Leave hotel", detail: "Uber ETA 22 min via Route 3." },
   { id: "t2", time: "6:10 PM", title: "Arrive parking", detail: "Lot B — 6 min walk to Gate C." },
   { id: "t3", time: "6:25 PM", title: "Enter Gate C", detail: "Low crowd · Est wait 3 min." },
-  { id: "t4", time: "6:45 PM", title: "Reach seat 112 · H · 24", detail: "Grab drink at Concourse Kiosk 3 en route." },
+  {
+    id: "t4",
+    time: "6:45 PM",
+    title: "Reach seat 112 · H · 24",
+    detail: "Grab drink at Concourse Kiosk 3 en route.",
+  },
   { id: "t5", time: "8:00 PM", title: "Kickoff", detail: "USA vs Brazil · Group Stage." },
 ];
 

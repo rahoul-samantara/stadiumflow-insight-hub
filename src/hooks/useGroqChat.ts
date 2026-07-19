@@ -7,6 +7,11 @@ import { generateAssistantReply, initialChat } from "@/data/mockData";
 import type { ChatMessage } from "@/types";
 import { humaniseCrowdContext } from "@/lib/utils";
 
+/**
+ * Custom React hook that manages the Groq-powered AI chat session.
+ * Provides message history, sending capability, thinking state, and offline detection.
+ * Falls back gracefully to mock responses when the Groq API is unavailable.
+ */
 export function useGroqChat() {
   const { language } = useLanguage();
   const crowdData = useCrowdData();
@@ -54,7 +59,7 @@ Respond in ${language}. Keep your answers concise, friendly, and helpful.`;
 
           const result = await chatSessionRef.current.sendMessage(promptWithContext);
           setIsOffline(false); // Successful live call — mark as online
-          
+
           const assistantMsg: ChatMessage = {
             id: (Date.now() + 1).toString(),
             role: "assistant",
@@ -92,7 +97,7 @@ Respond in ${language}. Keep your answers concise, friendly, and helpful.`;
         setIsThinking(false);
       }
     },
-    [crowdData, language, isThinking]
+    [crowdData, language, isThinking],
   );
 
   return {

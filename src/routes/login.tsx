@@ -3,7 +3,6 @@ import { ArrowRight, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
-import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -48,14 +47,15 @@ function LoginPage() {
             Experience the future of match-day operations
           </h2>
           <p className="mt-4 max-w-xl text-lg text-white/80">
-            StadiumFlow AI optimizes your journey from home to seat, ensuring a seamless experience for fans and complete control for organizers.
+            StadiumFlow AI optimizes your journey from home to seat, ensuring a seamless experience
+            for fans and complete control for organizers.
           </p>
         </div>
       </div>
 
       {/* Right side: Login Modal */}
       <div className="flex w-full flex-col justify-center px-4 py-12 sm:px-6 lg:w-1/2 lg:px-20 xl:px-32 relative">
-        <div 
+        <div
           className="absolute inset-0 z-0 block lg:hidden"
           style={{
             backgroundImage: "url('/world_cup_stadium.png')",
@@ -65,7 +65,7 @@ function LoginPage() {
         >
           <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm" />
         </div>
-        
+
         <div className="relative z-10 mx-auto w-full max-w-sm lg:max-w-md">
           <div className="mb-10 lg:hidden text-center">
             <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-yellow-500/30 bg-slate-950/50 px-4 py-1.5 text-sm font-medium text-yellow-500 backdrop-blur-md">
@@ -73,7 +73,7 @@ function LoginPage() {
               FIFA World Cup 2026™
             </div>
           </div>
-          
+
           <Card className="border-slate-800 bg-slate-900/80 text-white backdrop-blur-xl shadow-2xl shadow-black/50">
             <CardHeader className="space-y-3 pb-8 pt-8">
               <CardTitle className="text-center text-3xl font-bold tracking-tight text-white">
@@ -127,14 +127,14 @@ function LoginPage() {
               </div>
             </CardContent>
           </Card>
-          
+
           <div className="mt-8 text-center">
-             <Link
-                to="/"
-                className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
-              >
-                ← Back to home
-              </Link>
+            <Link
+              to="/"
+              className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
+            >
+              ← Back to home
+            </Link>
           </div>
         </div>
       </div>

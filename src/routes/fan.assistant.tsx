@@ -30,7 +30,9 @@ function AssistantPage() {
       <header>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wider text-primary">AI assistant</p>
+            <p className="text-xs font-medium uppercase tracking-wider text-primary">
+              AI assistant
+            </p>
             <h2 className="mt-1 text-2xl font-semibold tracking-tight">Ask about your match day</h2>
           </div>
           {/* Offline mode indicator — transparent fallback signal */}
@@ -55,10 +57,7 @@ function AssistantPage() {
       </header>
 
       <Card className="flex flex-1 flex-col border-border/60 shadow-[var(--shadow-soft)] overflow-hidden">
-        <CardContent 
-          className="flex flex-1 flex-col gap-4 overflow-y-auto p-6"
-          aria-live="polite"
-        >
+        <CardContent className="flex flex-1 flex-col gap-4 overflow-y-auto p-6" aria-live="polite">
           <AnimatePresence initial={false}>
             {messages.map((m) => (
               <MessageBubble key={m.id} message={m} />
@@ -99,7 +98,12 @@ function AssistantPage() {
               aria-label="Ask the assistant"
               disabled={isThinking}
             />
-            <Button type="submit" size="icon" aria-label="Send message" disabled={isThinking || !input.trim()}>
+            <Button
+              type="submit"
+              size="icon"
+              aria-label="Send message"
+              disabled={isThinking || !input.trim()}
+            >
               <Send className="size-4" />
             </Button>
           </form>
@@ -112,7 +116,7 @@ function AssistantPage() {
 function MessageBubble({ message }: { message: ChatMessage }) {
   const isUser = message.role === "user";
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
@@ -141,4 +145,3 @@ function MessageBubble({ message }: { message: ChatMessage }) {
     </motion.div>
   );
 }
-

@@ -34,12 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="flex min-h-[400px] flex-col items-center justify-center space-y-4 rounded-xl border border-destructive/20 bg-destructive/10 p-8 text-center text-destructive">
           <div className="rounded-full bg-destructive/20 p-3">
-            <svg
-              className="size-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+            <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -50,7 +45,8 @@ export class ErrorBoundary extends Component<Props, State> {
           </div>
           <h2 className="text-xl font-semibold">Something went wrong</h2>
           <p className="max-w-md text-sm opacity-80">
-            {this.state.error?.message || "An unexpected error occurred while rendering this component."}
+            {this.state.error?.message ||
+              "An unexpected error occurred while rendering this component."}
           </p>
           <Button
             variant="outline"

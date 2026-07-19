@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CrowdBadge } from "@/components/CrowdBadge";
 import { useCrowdData } from "@/hooks/useCrowdData";
-import { getRouteEstimate } from "@/services/crowdSimulator";
 import { useGroqChat } from "@/hooks/useGroqChat";
 import {
   Dialog,
@@ -31,7 +30,9 @@ function NavigationPage() {
 
   const handleAskAi = async () => {
     setShowAiModal(true);
-    await sendMessage("I am at Parking Lot B heading to section 112. Give me an alternate route suggestion based on current crowd levels.");
+    await sendMessage(
+      "I am at Parking Lot B heading to section 112. Give me an alternate route suggestion based on current crowd levels.",
+    );
   };
 
   const gatePositions: Record<string, string> = {
@@ -47,13 +48,22 @@ function NavigationPage() {
     <div className="mx-auto max-w-6xl space-y-6">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wider text-primary">Smart navigation</p>
-          <h2 className="mt-1 text-2xl font-semibold tracking-tight">Your route to seat 112 · H · 24</h2>
+          <p className="text-xs font-medium uppercase tracking-wider text-primary">
+            Smart navigation
+          </p>
+          <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+            Your route to seat 112 · H · 24
+          </h2>
           <p className="text-sm text-muted-foreground">
             Live route adapts as crowd conditions change around the stadium.
           </p>
         </div>
-        <Button onClick={handleAskAi} variant="secondary" className="gap-2" aria-label="Ask AI for alternate route">
+        <Button
+          onClick={handleAskAi}
+          variant="secondary"
+          className="gap-2"
+          aria-label="Ask AI for alternate route"
+        >
           <Sparkles className="size-4 text-primary" aria-hidden />
           Ask AI for alternate route
         </Button>
@@ -80,7 +90,9 @@ function NavigationPage() {
                 Calculating optimal route...
               </div>
             ) : (
-              <p className="whitespace-pre-wrap">{latestAiReply || "No recommendation available at this time."}</p>
+              <p className="whitespace-pre-wrap">
+                {latestAiReply || "No recommendation available at this time."}
+              </p>
             )}
           </div>
         </DialogContent>
@@ -100,8 +112,14 @@ function NavigationPage() {
               />
               {/* Field */}
               <div className="absolute inset-[18%] rounded-[24px] border-2 border-white/70 bg-[oklch(0.68_0.16_155/0.75)]" />
-              <div className="absolute left-1/2 top-[18%] h-[64%] w-px -translate-x-1/2 bg-white/60" aria-hidden />
-              <div className="absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white/70" aria-hidden />
+              <div
+                className="absolute left-1/2 top-[18%] h-[64%] w-px -translate-x-1/2 bg-white/60"
+                aria-hidden
+              />
+              <div
+                className="absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white/70"
+                aria-hidden
+              />
               {/* Gates */}
               {gates.map((g) => (
                 <Pin
@@ -141,26 +159,39 @@ function NavigationPage() {
         </Card>
 
         <div className="space-y-4">
-          <RouteStat icon={<MapPin className="size-4" />} label="Current location" value="Parking Lot B" />
-          <RouteStat 
-            icon={<DoorOpen className="size-4" />} 
-            label="Recommended gate" 
-            value={recommendations?.gateName || "Gate C"} 
-            hint={recommendations ? `${recommendations.estimatedWaitTime} min wait · ${recommendations.reason}` : "Calculating..."} 
+          <RouteStat
+            icon={<MapPin className="size-4" />}
+            label="Current location"
+            value="Parking Lot B"
           />
-          <RouteStat 
-            icon={<Footprints className="size-4" />} 
-            label="Est. walk time" 
-            value={recommendations ? `${recommendations.walkTime} min` : "9 min"} 
-            hint="Wheelchair accessible route available" 
+          <RouteStat
+            icon={<DoorOpen className="size-4" />}
+            label="Recommended gate"
+            value={recommendations?.gateName || "Gate C"}
+            hint={
+              recommendations
+                ? `${recommendations.estimatedWaitTime} min wait · ${recommendations.reason}`
+                : "Calculating..."
+            }
           />
-          <RouteStat 
-            icon={<Navigation className="size-4" />} 
-            label="Alternative gate" 
-            value={gates.find(g => g.id !== recommendations?.gateId)?.name || "Gate B"} 
-            hint={`${gates.find(g => g.id !== recommendations?.gateId)?.waitTime || 9} min wait`} 
+          <RouteStat
+            icon={<Footprints className="size-4" />}
+            label="Est. walk time"
+            value={recommendations ? `${recommendations.walkTime} min` : "9 min"}
+            hint="Wheelchair accessible route available"
           />
-          <RouteStat icon={<Clock className="size-4" />} label="Arrive by" value="6:45 PM" hint="Kickoff 8:00 PM" />
+          <RouteStat
+            icon={<Navigation className="size-4" />}
+            label="Alternative gate"
+            value={gates.find((g) => g.id !== recommendations?.gateId)?.name || "Gate B"}
+            hint={`${gates.find((g) => g.id !== recommendations?.gateId)?.waitTime || 9} min wait`}
+          />
+          <RouteStat
+            icon={<Clock className="size-4" />}
+            label="Arrive by"
+            value="6:45 PM"
+            hint="Kickoff 8:00 PM"
+          />
         </div>
       </div>
 
@@ -174,7 +205,9 @@ function NavigationPage() {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-semibold">{z.name}</p>
-                  <CrowdBadge level={z.status === "Low" ? "low" : z.status === "Medium" ? "medium" : "high"} />
+                  <CrowdBadge
+                    level={z.status === "Low" ? "low" : z.status === "Medium" ? "medium" : "high"}
+                  />
                 </div>
                 <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-muted">
                   <div
@@ -185,8 +218,8 @@ function NavigationPage() {
                         z.status === "Low"
                           ? "var(--success)"
                           : z.status === "Medium"
-                          ? "var(--warning)"
-                          : "var(--destructive)",
+                            ? "var(--warning)"
+                            : "var(--destructive)",
                     }}
                   />
                 </div>
