@@ -1,5 +1,8 @@
 // src/services/crowdSimulator.ts
 
+/**
+ * Represents the current crowd density status for a specific stadium zone.
+ */
 export interface ZoneData {
   id: string;
   name: string;
@@ -7,6 +10,9 @@ export interface ZoneData {
   status: 'Low' | 'Medium' | 'High' | 'Critical';
 }
 
+/**
+ * Represents the current wait time and status for a specific stadium gate.
+ */
 export interface GateData {
   id: string;
   name: string;
@@ -14,6 +20,9 @@ export interface GateData {
   status: 'Low' | 'Medium' | 'High' | 'Critical';
 }
 
+/**
+ * A snapshot of the stadium's crowd data at a specific point in time.
+ */
 export interface CrowdSnapshot {
   zones: ZoneData[];
   gates: GateData[];
