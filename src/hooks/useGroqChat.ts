@@ -97,7 +97,7 @@ Respond in ${language}. Keep your answers concise, friendly, and helpful.`;
         setIsThinking(false);
       }
     },
-    [crowdData, language, isThinking],
+    [crowdData, isThinking],
   );
 
   return {
