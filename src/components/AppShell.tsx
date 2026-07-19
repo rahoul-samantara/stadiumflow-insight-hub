@@ -5,12 +5,47 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { RoleBadge } from "@/components/RoleBadge";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Globe } from "lucide-react";
+import { SkipToContent } from "@/components/SkipToContent";
+import { A11yAnnouncer } from "@/components/A11yAnnouncer";
 
 export interface NavItem {
   to: string;
   label: string;
   icon: ReactNode;
+}
+
+function LanguageSelector() {
+  const { language, setLanguage, availableLanguages } = useLanguage();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="sm" className="gap-2">
+          <Globe className="size-4" />
+          <span className="hidden sm:inline-block">{language}</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {availableLanguages.map((lang) => (
+          <DropdownMenuItem
+            key={lang}
+            onClick={() => setLanguage(lang)}
+            className={cn(language === lang && "bg-accent text-accent-foreground")}
+          >
+            {lang}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 }
 
 interface AppShellProps {
@@ -76,6 +111,8 @@ export function AppShell({ title, nav, children }: AppShellProps) {
 
   return (
     <div className="flex min-h-dvh w-full bg-background">
+      <SkipToContent />
+      <A11yAnnouncer />
       <aside className="hidden w-64 shrink-0 flex-col border-r border-border/60 bg-card/60 p-4 md:flex">
         <div className="mb-8 px-2">
           <Brand />
@@ -123,10 +160,11 @@ export function AppShell({ title, nav, children }: AppShellProps) {
           </div>
           <h1 className="hidden text-base font-semibold md:block">{title}</h1>
           <div className="ml-auto flex items-center gap-2">
+            <LanguageSelector />
             {user && <RoleBadge role={user.role} />}
           </div>
         </header>
-        <main className="flex-1 animate-fade-in px-4 py-6 md:px-8 md:py-8">{children}</main>
+        <main id="main-content" className="flex-1 animate-fade-in px-4 py-6 md:px-8 md:py-8">{children}</main>
       </div>
     </div>
   );

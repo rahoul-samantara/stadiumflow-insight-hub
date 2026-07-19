@@ -8,18 +8,21 @@ import {
   LayoutDashboard,
   Settings,
   Users,
+  RefreshCw,
+  Loader2,
 } from "lucide-react";
+import { useCrowdData } from "@/hooks/useCrowdData";
+import { useOperationalAI } from "@/hooks/useOperationalAI";
+import { Button } from "@/components/ui/button";
 import { AppShell } from "@/components/AppShell";
 import { Card, CardContent } from "@/components/ui/card";
 import { CrowdBadge } from "@/components/CrowdBadge";
 import { MetricCard } from "@/components/MetricCard";
 import { RequireRole } from "@/components/RequireRole";
 import {
-  aiOperationalSummary,
-  attendanceMetric,
-  crowdZones,
   hourlyArrivals,
   organizerAlerts,
+  attendanceMetric,
 } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +39,16 @@ const nav = [
 ];
 
 function OrganizerPage() {
-  const { current, capacity, avgWaitMin, gateOccupancyPct } = attendanceMetric;
+  const { zones, gates } = useCrowdData();
+  const { summary, isLoading: aiLoading, refresh: refreshAI } = useOperationalAI();
+
+  const avgWaitMin = gates.length > 0 ? Math.round(gates.reduce((acc, g) => acc + g.waitTime, 0) / gates.length) : attendanceMetric.avgWaitMin;
+  const avgDensity = zones.length > 0 ? zones.reduce((acc, z) => acc + z.density, 0) / zones.length : 0;
+  
+  const current = Math.round(attendanceMetric.capacity * (avgDensity / 100));
+  const capacity = attendanceMetric.capacity;
+  const gateOccupancyPct = Math.round(avgDensity);
+
   const attendancePct = Math.round((current / capacity) * 100);
   const maxArrivals = Math.max(...hourlyArrivals.map((h) => h.arrivals));
 
@@ -125,14 +137,20 @@ function OrganizerPage() {
 
             <Card className="border-border/60 shadow-[var(--shadow-soft)]">
               <CardContent className="p-6">
-                <div className="flex items-center gap-2">
-                  <div className="grid size-8 place-items-center rounded-lg bg-primary/10 text-primary">
-                    <Bot className="size-4" aria-hidden />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="grid size-8 place-items-center rounded-lg bg-primary/10 text-primary">
+                      {aiLoading ? <Loader2 className="size-4 animate-spin" /> : <Bot className="size-4" aria-hidden />}
+                    </div>
+                    <h3 className="text-base font-semibold">AI operational summary</h3>
                   </div>
-                  <h3 className="text-base font-semibold">AI operational summary</h3>
+                  <Button variant="outline" size="sm" onClick={() => refreshAI()} disabled={aiLoading}>
+                    <RefreshCw className={cn("mr-2 size-4", aiLoading && "animate-spin")} />
+                    Refresh
+                  </Button>
                 </div>
                 <ul className="mt-4 space-y-2.5">
-                  {aiOperationalSummary.map((s, i) => (
+                  {summary.map((s, i) => (
                     <li
                       key={i}
                       className="rounded-lg border border-border/60 bg-background p-3 text-sm"
@@ -156,21 +174,22 @@ function OrganizerPage() {
                   <span className="text-xs text-muted-foreground">Live heatmap</span>
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
-                  {crowdZones.concat(crowdZones).slice(0, 12).map((z, i) => (
+                  {zones.concat(zones).slice(0, 12).map((z, i) => (
                     <div
                       key={`${z.id}-${i}`}
                       className={cn(
                         "aspect-square rounded-md",
-                        z.level === "low" && "bg-success/40",
-                        z.level === "medium" && "bg-warning/60",
-                        z.level === "high" && "bg-destructive/60",
+                        z.status === "Low" && "bg-success/40",
+                        z.status === "Medium" && "bg-warning/60",
+                        z.status === "High" && "bg-destructive/60",
+                        z.status === "Critical" && "bg-destructive/80",
                       )}
-                      title={`${z.name}: ${z.occupancy}%`}
+                      title={`${z.name}: ${z.density}%`}
                     />
                   ))}
                 </div>
                 <div className="mt-5 space-y-2">
-                  {crowdZones.map((z) => (
+                  {zones.map((z) => (
                     <div
                       key={z.id}
                       className="flex items-center justify-between gap-3 rounded-lg border border-border/60 bg-background p-3"
@@ -178,7 +197,7 @@ function OrganizerPage() {
                       <div>
                         <p className="text-sm font-semibold">{z.name}</p>
                         <p className="text-xs text-muted-foreground">
-                          {z.occupancy}% · wait {z.wait}
+                          {z.density}% occupancy
                         </p>
                       </div>
                       <div className="flex items-center gap-3">
@@ -186,17 +205,17 @@ function OrganizerPage() {
                           <div
                             className="h-full rounded-full"
                             style={{
-                              width: `${z.occupancy}%`,
+                              width: `${z.density}%`,
                               background:
-                                z.level === "low"
+                                z.status === "Low"
                                   ? "var(--success)"
-                                  : z.level === "medium"
+                                  : z.status === "Medium"
                                   ? "var(--warning)"
                                   : "var(--destructive)",
                             }}
                           />
                         </div>
-                        <CrowdBadge level={z.level} />
+                        <CrowdBadge level={z.status.toLowerCase() as any} />
                       </div>
                     </div>
                   ))}

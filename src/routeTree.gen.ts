@@ -9,34 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as OrganizerRouteImport } from './routes/organizer'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as FanRouteImport } from './routes/fan'
-import { Route as AccessDeniedRouteImport } from './routes/access-denied'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AccessDeniedRouteImport } from './routes/access-denied'
+import { Route as FanRouteImport } from './routes/fan'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as OrganizerRouteImport } from './routes/organizer'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as FanIndexRouteImport } from './routes/fan.index'
-import { Route as FanNavigationRouteImport } from './routes/fan.navigation'
 import { Route as FanAssistantRouteImport } from './routes/fan.assistant'
+import { Route as FanNavigationRouteImport } from './routes/fan.navigation'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OrganizerRoute = OrganizerRouteImport.update({
-  id: '/organizer',
-  path: '/organizer',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FanRoute = FanRouteImport.update({
-  id: '/fan',
-  path: '/fan',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccessDeniedRoute = AccessDeniedRouteImport.update({
@@ -44,9 +29,24 @@ const AccessDeniedRoute = AccessDeniedRouteImport.update({
   path: '/access-denied',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const FanRoute = FanRouteImport.update({
+  id: '/fan',
+  path: '/fan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizerRoute = OrganizerRouteImport.update({
+  id: '/organizer',
+  path: '/organizer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FanIndexRoute = FanIndexRouteImport.update({
@@ -54,14 +54,14 @@ const FanIndexRoute = FanIndexRouteImport.update({
   path: '/',
   getParentRoute: () => FanRoute,
 } as any)
-const FanNavigationRoute = FanNavigationRouteImport.update({
-  id: '/navigation',
-  path: '/navigation',
-  getParentRoute: () => FanRoute,
-} as any)
 const FanAssistantRoute = FanAssistantRouteImport.update({
   id: '/assistant',
   path: '/assistant',
+  getParentRoute: () => FanRoute,
+} as any)
+const FanNavigationRoute = FanNavigationRouteImport.update({
+  id: '/navigation',
+  path: '/navigation',
   getParentRoute: () => FanRoute,
 } as any)
 
@@ -144,32 +144,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/organizer': {
-      id: '/organizer'
-      path: '/organizer'
-      fullPath: '/organizer'
-      preLoaderRoute: typeof OrganizerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/fan': {
-      id: '/fan'
-      path: '/fan'
-      fullPath: '/fan'
-      preLoaderRoute: typeof FanRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/access-denied': {
@@ -179,11 +158,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccessDeniedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/fan': {
+      id: '/fan'
+      path: '/fan'
+      fullPath: '/fan'
+      preLoaderRoute: typeof FanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organizer': {
+      id: '/organizer'
+      path: '/organizer'
+      fullPath: '/organizer'
+      preLoaderRoute: typeof OrganizerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fan/': {
@@ -193,18 +193,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FanIndexRouteImport
       parentRoute: typeof FanRoute
     }
-    '/fan/navigation': {
-      id: '/fan/navigation'
-      path: '/navigation'
-      fullPath: '/fan/navigation'
-      preLoaderRoute: typeof FanNavigationRouteImport
-      parentRoute: typeof FanRoute
-    }
     '/fan/assistant': {
       id: '/fan/assistant'
       path: '/assistant'
       fullPath: '/fan/assistant'
       preLoaderRoute: typeof FanAssistantRouteImport
+      parentRoute: typeof FanRoute
+    }
+    '/fan/navigation': {
+      id: '/fan/navigation'
+      path: '/navigation'
+      fullPath: '/fan/navigation'
+      preLoaderRoute: typeof FanNavigationRouteImport
       parentRoute: typeof FanRoute
     }
   }
@@ -235,3 +235,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

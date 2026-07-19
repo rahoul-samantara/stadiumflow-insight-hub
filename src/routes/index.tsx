@@ -61,7 +61,12 @@ function LandingPage() {
         </Button>
       </header>
 
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-[#023c71]">
+        <img
+          src="/world_cup_stadium.png"
+          alt="World Cup Stadium"
+          className="absolute inset-0 -z-20 h-full w-full object-cover opacity-30 mix-blend-overlay"
+        />
         <div
           aria-hidden
           className="absolute inset-0 -z-10 opacity-90"
@@ -139,6 +144,56 @@ function LandingPage() {
               </CardContent>
             </Card>
           ))}
+        </div>
+      </section>
+
+      <section className="bg-primary text-primary-foreground py-20">
+        <div className="mx-auto max-w-6xl px-4 md:px-8">
+          <div className="mb-10 text-center">
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+              World Cup 2026 Stats
+            </h2>
+            <p className="mt-4 text-primary-foreground/80">
+              Live updates and countdown to the greatest tournament.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            <Card className="bg-white/10 border-none text-white backdrop-blur">
+              <CardContent className="flex flex-col items-center justify-center p-8">
+                <div className="text-5xl font-bold tracking-tighter text-[#d1a842]">
+                  326
+                </div>
+                <div className="mt-2 text-sm font-medium uppercase tracking-widest text-white/80">
+                  Days Until Kickoff
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="bg-white/10 border-none text-white backdrop-blur md:col-span-2">
+              <CardContent className="p-8">
+                <h3 className="text-lg font-semibold text-[#d1a842] mb-4 uppercase tracking-wider">
+                  Recent Classic Matches
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between border-b border-white/20 pb-4">
+                    <div className="flex items-center gap-4">
+                      <span className="font-medium text-lg">France</span>
+                      <span className="rounded bg-white/20 px-2 py-1 text-sm font-bold">4 - 6</span>
+                      <span className="font-medium text-lg">England</span>
+                    </div>
+                    <span className="text-xs text-white/60">Final (1998)</span>
+                  </div>
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center gap-4">
+                      <span className="font-medium text-lg">Argentina</span>
+                      <span className="rounded bg-white/20 px-2 py-1 text-sm font-bold">3 - 3</span>
+                      <span className="font-medium text-lg">France</span>
+                    </div>
+                    <span className="text-xs text-white/60">Final (2022)</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
