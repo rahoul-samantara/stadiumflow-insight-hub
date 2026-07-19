@@ -1,5 +1,5 @@
 export type Role = "fan" | "organizer";
-export type Language = "English" | "Spanish" | "Portuguese" | "French";
+export type Language = "English" | "Spanish" | "Portuguese" | "French" | "Arabic" | "Hindi";
 export type CrowdLevel = "low" | "medium" | "high";
 
 export interface DemoUser {
@@ -61,3 +61,23 @@ export interface TimelineEvent {
   title: string;
   detail: string;
 }
+
+export interface AIInsight {
+  type: "summary" | "recommendation" | "alert";
+  message: string;
+  timestamp: string;
+}
+
+export interface NavigationRequest {
+  userId: string;
+  source: string;
+  destination: string;
+}
+
+export interface CrowdStatus {
+  gate: string;
+  occupancy: number;
+  waitTime: number;
+  trend: "rising" | "falling" | "stable";
+}
+
