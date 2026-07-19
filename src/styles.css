@@ -93,7 +93,12 @@
   --input: oklch(0.45 0.12 258);
   --ring: oklch(0.746 0.155 83.33);
   --gradient-primary: linear-gradient(135deg, oklch(0.343 0.117 257.65), oklch(0.4 0.12 258));
-  --gradient-hero: linear-gradient(135deg, oklch(0.343 0.117 257.65) 0%, oklch(0.25 0.1 258) 50%, oklch(0.15 0.05 258) 100%);
+  --gradient-hero: linear-gradient(
+    135deg,
+    oklch(0.343 0.117 257.65) 0%,
+    oklch(0.25 0.1 258) 50%,
+    oklch(0.15 0.05 258) 100%
+  );
   --gradient-surface: linear-gradient(180deg, oklch(0.343 0.117 257.65), oklch(0.4 0.12 258));
   --shadow-soft: 0 1px 2px oklch(0.1 0.05 258 / 0.1), 0 4px 12px oklch(0.1 0.05 258 / 0.15);
   --shadow-elegant: 0 10px 40px -12px oklch(0.746 0.155 83.33 / 0.25);

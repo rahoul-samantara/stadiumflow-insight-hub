@@ -61,13 +61,15 @@ export function ChatSkeleton() {
           <div
             key={i}
             className={`flex w-max max-w-[80%] flex-col gap-2 rounded-lg px-3 py-2 text-sm ${
-              i % 2 === 0
-                ? "ml-auto bg-primary text-primary-foreground"
-                : "bg-muted"
+              i % 2 === 0 ? "ml-auto bg-primary text-primary-foreground" : "bg-muted"
             }`}
           >
-            <Skeleton className={`h-4 w-[200px] ${i % 2 === 0 ? "bg-primary-foreground/20" : ""}`} />
-            <Skeleton className={`h-4 w-[150px] ${i % 2 === 0 ? "bg-primary-foreground/20" : ""}`} />
+            <Skeleton
+              className={`h-4 w-[200px] ${i % 2 === 0 ? "bg-primary-foreground/20" : ""}`}
+            />
+            <Skeleton
+              className={`h-4 w-[150px] ${i % 2 === 0 ? "bg-primary-foreground/20" : ""}`}
+            />
           </div>
         ))}
       </div>

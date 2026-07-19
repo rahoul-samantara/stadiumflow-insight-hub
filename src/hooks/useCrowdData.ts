@@ -1,14 +1,27 @@
-import { useState, useEffect, useCallback } from 'react';
-import { crowdSimulator, type CrowdSnapshot, getGateRecommendation, type UserSeat, type GateRecommendation } from '@/services/crowdSimulator';
+import { useState, useEffect, useCallback } from "react";
+import {
+  crowdSimulator,
+  type CrowdSnapshot,
+  getGateRecommendation,
+  type UserSeat,
+  type GateRecommendation,
+} from "@/services/crowdSimulator";
 
+/**
+ * Interface detailing the returned values and methods from the useCrowdData hook.
+ */
 export interface UseCrowdDataReturn {
-  zones: CrowdSnapshot['zones'];
-  gates: CrowdSnapshot['gates'];
+  zones: CrowdSnapshot["zones"];
+  gates: CrowdSnapshot["gates"];
   recommendations: GateRecommendation | null;
   isLive: boolean;
   getRecommendationForSeat: (seat: UserSeat) => void;
 }
 
+/**
+ * Custom React hook that connects to the deterministic crowd simulation engine.
+ * It provides live stadium zone densities, gate wait times, and personalized seating route recommendations.
+ */
 export function useCrowdData(): UseCrowdDataReturn {
   const [snapshot, setSnapshot] = useState<CrowdSnapshot>(() => crowdSimulator.getSnapshot());
   const [isLive, setIsLive] = useState(false);

@@ -7,34 +7,51 @@ An AI-powered match journey assistant that helps fans navigate the stadium effic
 ---
 
 ## 📖 Problem Statement Alignment (Virtual: PromptWars)
+
 This project is an official submission for **[Challenge 4] Smart Stadiums & Tournament Operations**.
 
-Managing a crowd of 80,000+ passionate football fans simultaneously is an immense logistical challenge. Traditional navigation and static signage often fail to adapt to live bottlenecks, leading to long wait times, frustrated fans, and overwhelmed stadium staff. 
+Managing a crowd of 80,000+ passionate football fans simultaneously is an immense logistical challenge. Traditional navigation and static signage often fail to adapt to live bottlenecks, leading to long wait times, frustrated fans, and overwhelmed stadium staff.
 
 In strict adherence to the challenge rules, **it is mandatory to use Gen AI**, which is why our solution relies heavily on Generative AI. The goal was to **build a GenAI-enabled solution** that enhances stadium operations and the overall tournament experience for fans and venue staff by leveraging Generative AI for navigation, crowd management, accessibility, and real-time decision support.
 
 ---
 
 ## 💡 Our Solution: StadiumFlow AI
+
 StadiumFlow AI provides **one unified platform** with intelligent, role-based experiences powered by a live, deterministic crowd simulation engine and advanced Large Language Models (LLMs).
 
 ### Features for Fans
-* 📍 **Smart Navigation**: Turn-by-turn routing to seats, food, and restrooms, updated live with crowd data to bypass congestion.
-* 🤖 **AI Match Assistant**: A contextual, multilingual GenAI assistant. It knows your seat, your gate, and the real-time density of the stadium, providing customized, actionable advice (e.g., "Gate A is busy, use Gate C for a 3-minute wait").
-* 🌐 **Multilingual & Accessible**: Native experiences in English, Spanish, Portuguese, and French, with dedicated accessibility support.
+
+- 📍 **Smart Navigation**: Turn-by-turn routing to seats, food, and restrooms, updated live with crowd data to bypass congestion.
+- 🤖 **AI Match Assistant**: A contextual, multilingual GenAI assistant. It knows your seat, your gate, and the real-time density of the stadium, providing customized, actionable advice (e.g., "Gate A is busy, use Gate C for a 3-minute wait").
+- 🌐 **Multilingual & Accessible**: Native experiences in English, Spanish, Portuguese, and French, with dedicated accessibility support.
 
 ### Features for Organizers
-* 📊 **Crowd Intelligence**: Real-time density heatmaps and wait times across all gates and concourses.
-* 🧠 **Operational AI**: Generates automated, contextual operational summaries (e.g., "Food Court 2 is reaching capacity — recommend opening overflow concession at Section 118").
+
+- 📊 **Crowd Intelligence**: Real-time density heatmaps and wait times across all gates and concourses.
+- 🧠 **Operational AI**: Generates automated, contextual operational summaries (e.g., "Food Court 2 is reaching capacity — recommend opening overflow concession at Section 118").
+
+---
+
+## 🤖 How We Use Generative AI (Innovation)
+
+To solve the **PromptWars** challenge using advanced GenAI techniques, we deeply integrated the **Llama-3 model (via Groq)** with our deterministic crowd simulation engine.
+
+Instead of a generic chatbot, StadiumFlow AI uses GenAI as an intelligent orchestration layer:
+
+1. **Dynamic RAG Context Injection**: We serialize the real-time stadium state (gate wait times, zone densities) into a token-optimized JSON structure and inject it into the LLM's system prompt on every request.
+2. **Personalized Routing Assistant**: The AI acts as a concierge, understanding the fan's exact seat, language, and the live status of the stadium to recommend the optimal path.
+3. **Operational Summarization**: Organizers receive an auto-generated, rolling digest of stadium health synthesized from thousands of live data points into actionable insights.
+4. **Multilingual Access**: The LLM natively translates routing advice into Spanish, Portuguese, French, Arabic, and Hindi in real-time.
 
 ---
 
 ## 🛠️ Technical Architecture
 
-* **Frontend**: React, Vite, TypeScript, Tailwind CSS (v4), Shadcn UI, and Framer Motion.
-* **Routing**: TanStack Router for type-safe, seamless navigation.
-* **AI Integration**: Groq SDK (Llama-3) seamlessly injected with live JSON simulation state to provide highly contextual LLM responses, complete with robust offline fallbacks.
-* **Simulation Engine**: A bespoke, deterministic crowd simulation engine calculating dynamic wait times and zone densities in real-time.
+- **Frontend**: React, Vite, TypeScript, Tailwind CSS (v4), Shadcn UI, and Framer Motion.
+- **Routing**: TanStack Router for type-safe, seamless navigation.
+- **AI Integration**: Groq SDK (Llama-3) seamlessly injected with live JSON simulation state to provide highly contextual LLM responses, complete with robust offline fallbacks.
+- **Simulation Engine**: A bespoke, deterministic crowd simulation engine calculating dynamic wait times and zone densities in real-time.
 
 ---
 
@@ -59,9 +76,11 @@ StadiumFlow AI provides **one unified platform** with intelligent, role-based ex
    ```
 
 ## 🎨 Design & Accessibility
-* Designed with the official **FIFA World Cup Deep Blue and Gold** aesthetics.
-* Strict adherence to **WCAG 2.1 AA** contrast standards.
-* Fluid, premium micro-animations using Framer Motion.
+
+- Designed with the official **FIFA World Cup Deep Blue and Gold** aesthetics.
+- Strict adherence to **WCAG 2.1 AA** contrast standards.
+- Fluid, premium micro-animations using Framer Motion.
 
 ---
-*Built with ❤️ for the 2026 World Cup Hackathon.*
+
+_Built with ❤️ for the 2026 World Cup Hackathon._

@@ -121,7 +121,10 @@ export function AppShell({ title, nav, children }: AppShellProps) {
         <div className="mt-auto rounded-xl border border-border/60 bg-background p-3">
           <div className="flex items-center gap-2">
             <div className="grid size-8 place-items-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-              {user?.name.split(" ").map((p) => p[0]).join("")}
+              {user?.name
+                .split(" ")
+                .map((p) => p[0])
+                .join("")}
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">{user?.name}</p>
@@ -164,7 +167,9 @@ export function AppShell({ title, nav, children }: AppShellProps) {
             {user && <RoleBadge role={user.role} />}
           </div>
         </header>
-        <main id="main-content" className="flex-1 animate-fade-in px-4 py-6 md:px-8 md:py-8">{children}</main>
+        <main id="main-content" className="flex-1 animate-fade-in px-4 py-6 md:px-8 md:py-8">
+          {children}
+        </main>
       </div>
     </div>
   );
