@@ -6,10 +6,12 @@ An AI-powered match journey assistant that helps fans navigate the stadium effic
 
 ---
 
-## 📖 Problem Statement
+## 📖 Problem Statement Alignment (Virtual: PromptWars)
+This project is an official submission for **[Challenge 4] Smart Stadiums & Tournament Operations**.
+
 Managing a crowd of 80,000+ passionate football fans simultaneously is an immense logistical challenge. Traditional navigation and static signage often fail to adapt to live bottlenecks, leading to long wait times, frustrated fans, and overwhelmed stadium staff. 
 
-The goal was to **build a GenAI-enabled solution** that enhances stadium operations and the overall tournament experience for fans and venue staff by leveraging Generative AI for navigation, crowd management, accessibility, and real-time decision support.
+In strict adherence to the challenge rules, **it is mandatory to use Gen AI**, which is why our solution relies heavily on Generative AI. The goal was to **build a GenAI-enabled solution** that enhances stadium operations and the overall tournament experience for fans and venue staff by leveraging Generative AI for navigation, crowd management, accessibility, and real-time decision support.
 
 ---
 
