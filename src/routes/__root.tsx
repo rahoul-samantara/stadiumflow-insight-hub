@@ -95,18 +95,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "AI-powered match journey assistant for FIFA World Cup 2026 — smart navigation, crowd intelligence, and multilingual fan support.",
+          "Virtual: PromptWars - Challenge 4: Smart Stadiums & Tournament Operations. AI-powered match journey assistant using Llama-3.",
       },
-      { name: "author", content: "StadiumFlow AI" },
-      { property: "og:title", content: "StadiumFlow AI — FIFA 2026 Match Assistant" },
+      { name: "author", content: "StadiumFlow AI Team" },
+      { property: "og:title", content: "StadiumFlow AI — PromptWars Challenge 4" },
       {
         property: "og:description",
         content:
-          "Navigate the stadium, beat the crowds, and get live AI recommendations on match day.",
+          "AI-driven crowd simulation and multi-lingual RAG agent for Smart Stadium operations.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
