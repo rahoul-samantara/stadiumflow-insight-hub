@@ -14,6 +14,7 @@ describe("env config", () => {
   });
 
   it("should return false when VITE_GROQ_API_KEY is not set", async () => {
+    vi.stubEnv("VITE_GROQ_API_KEY", "");
     const { hasGroqKey } = await import("../env");
     expect(hasGroqKey()).toBe(false);
   });
