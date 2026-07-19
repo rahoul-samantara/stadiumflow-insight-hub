@@ -62,10 +62,9 @@ function FanDashboard() {
     }
 
     if (crowdData.isLive) {
-      // Just fetch once when live data starts to avoid spamming the API
       fetchRecommendations();
     }
-  }, [crowdData.isLive]);
+  }, [crowdData.isLive, crowdData.gates, crowdData.zones]);
 
   // Determine if there are high crowd conditions
   const hasHighCrowd =
