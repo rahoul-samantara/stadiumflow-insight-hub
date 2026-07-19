@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as OrganizerRouteImport } from './routes/organizer'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FanRouteImport } from './routes/fan'
@@ -18,6 +19,11 @@ import { Route as FanIndexRouteImport } from './routes/fan.index'
 import { Route as FanNavigationRouteImport } from './routes/fan.navigation'
 import { Route as FanAssistantRouteImport } from './routes/fan.assistant'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrganizerRoute = OrganizerRouteImport.update({
   id: '/organizer',
   path: '/organizer',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/fan': typeof FanRouteWithChildren
   '/login': typeof LoginRoute
   '/organizer': typeof OrganizerRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/fan/assistant': typeof FanAssistantRoute
   '/fan/navigation': typeof FanNavigationRoute
   '/fan/': typeof FanIndexRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/access-denied': typeof AccessDeniedRoute
   '/login': typeof LoginRoute
   '/organizer': typeof OrganizerRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/fan/assistant': typeof FanAssistantRoute
   '/fan/navigation': typeof FanNavigationRoute
   '/fan': typeof FanIndexRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/fan': typeof FanRouteWithChildren
   '/login': typeof LoginRoute
   '/organizer': typeof OrganizerRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/fan/assistant': typeof FanAssistantRoute
   '/fan/navigation': typeof FanNavigationRoute
   '/fan/': typeof FanIndexRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/fan'
     | '/login'
     | '/organizer'
+    | '/sitemap.xml'
     | '/fan/assistant'
     | '/fan/navigation'
     | '/fan/'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/access-denied'
     | '/login'
     | '/organizer'
+    | '/sitemap.xml'
     | '/fan/assistant'
     | '/fan/navigation'
     | '/fan'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/fan'
     | '/login'
     | '/organizer'
+    | '/sitemap.xml'
     | '/fan/assistant'
     | '/fan/navigation'
     | '/fan/'
@@ -127,10 +139,18 @@ export interface RootRouteChildren {
   FanRoute: typeof FanRouteWithChildren
   LoginRoute: typeof LoginRoute
   OrganizerRoute: typeof OrganizerRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/organizer': {
       id: '/organizer'
       path: '/organizer'
@@ -210,6 +230,7 @@ const rootRouteChildren: RootRouteChildren = {
   FanRoute: FanRouteWithChildren,
   LoginRoute: LoginRoute,
   OrganizerRoute: OrganizerRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
