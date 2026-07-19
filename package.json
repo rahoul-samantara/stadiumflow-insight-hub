@@ -1,5 +1,17 @@
 {
-  "name": "tanstack_start_ts",
+  "name": "stadiumflow-ai",
+  "version": "1.0.0",
+  "description": "StadiumFlow AI - Solution for Virtual: PromptWars - Challenge 4: Smart Stadiums & Tournament Operations using Llama-3 Generative AI",
+  "author": "StadiumFlow AI Team",
+  "license": "MIT",
+  "keywords": [
+    "Hack2Skill",
+    "PromptWars",
+    "Smart Stadiums",
+    "Tournament Operations",
+    "Generative AI",
+    "Llama-3"
+  ],
   "private": true,
   "sideEffects": false,
   "type": "module",

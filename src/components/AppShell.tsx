@@ -54,6 +54,16 @@ interface AppShellProps {
   children: ReactNode;
 }
 
+/**
+ * The main application shell layout component.
+ * It wraps the primary content area, providing global layout structures like
+ * headers, navigation, main content area, and global providers/announcers.
+ *
+ * @param {object} props - Component props.
+ * @param {string} props.title - The title to display in the header.
+ * @param {NavItem[]} props.nav - The navigation items to display.
+ * @param {ReactNode} props.children - The nested child routes/components to render.
+ */
 export function AppShell({ title, nav, children }: AppShellProps) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();

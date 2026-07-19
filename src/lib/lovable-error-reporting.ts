@@ -23,6 +23,13 @@ declare global {
   }
 }
 
+/**
+ * Reports a runtime error or caught exception to the Lovable telemetry agent
+ * and preview environment, allowing for enhanced debugging during development.
+ *
+ * @param {unknown} error - The caught error, exception, or Response object to report.
+ * @param {Record<string, unknown>} context - Additional context to attach (e.g. route, component).
+ */
 export function reportLovableError(error: unknown, context: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(

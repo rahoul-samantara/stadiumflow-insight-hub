@@ -2,6 +2,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
+/**
+ * Interface detailing the props for the MetricCard component.
+ */
 interface MetricCardProps {
   label: string;
   value: ReactNode;
@@ -11,6 +14,12 @@ interface MetricCardProps {
   className?: string;
 }
 
+/**
+ * A reusable card component to display key performance indicators (KPIs)
+ * or metrics (e.g. total attendance, current wait time) across the dashboard.
+ *
+ * @param {MetricCardProps} props - The component props.
+ */
 export function MetricCard({ label, value, hint, icon, trend, className }: MetricCardProps) {
   return (
     <Card className={cn("border-border/60 shadow-[var(--shadow-soft)]", className)}>
