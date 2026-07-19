@@ -9,38 +9,176 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as OrganizerRouteImport } from './routes/organizer'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as FanRouteImport } from './routes/fan'
+import { Route as AccessDeniedRouteImport } from './routes/access-denied'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FanIndexRouteImport } from './routes/fan.index'
+import { Route as FanNavigationRouteImport } from './routes/fan.navigation'
+import { Route as FanAssistantRouteImport } from './routes/fan.assistant'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizerRoute = OrganizerRouteImport.update({
+  id: '/organizer',
+  path: '/organizer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FanRoute = FanRouteImport.update({
+  id: '/fan',
+  path: '/fan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccessDeniedRoute = AccessDeniedRouteImport.update({
+  id: '/access-denied',
+  path: '/access-denied',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FanIndexRoute = FanIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FanRoute,
+} as any)
+const FanNavigationRoute = FanNavigationRouteImport.update({
+  id: '/navigation',
+  path: '/navigation',
+  getParentRoute: () => FanRoute,
+} as any)
+const FanAssistantRoute = FanAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => FanRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/access-denied': typeof AccessDeniedRoute
+  '/fan': typeof FanRouteWithChildren
+  '/login': typeof LoginRoute
+  '/organizer': typeof OrganizerRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/fan/assistant': typeof FanAssistantRoute
+  '/fan/navigation': typeof FanNavigationRoute
+  '/fan/': typeof FanIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/access-denied': typeof AccessDeniedRoute
+  '/login': typeof LoginRoute
+  '/organizer': typeof OrganizerRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/fan/assistant': typeof FanAssistantRoute
+  '/fan/navigation': typeof FanNavigationRoute
+  '/fan': typeof FanIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/access-denied': typeof AccessDeniedRoute
+  '/fan': typeof FanRouteWithChildren
+  '/login': typeof LoginRoute
+  '/organizer': typeof OrganizerRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/fan/assistant': typeof FanAssistantRoute
+  '/fan/navigation': typeof FanNavigationRoute
+  '/fan/': typeof FanIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/access-denied'
+    | '/fan'
+    | '/login'
+    | '/organizer'
+    | '/sitemap.xml'
+    | '/fan/assistant'
+    | '/fan/navigation'
+    | '/fan/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/access-denied'
+    | '/login'
+    | '/organizer'
+    | '/sitemap.xml'
+    | '/fan/assistant'
+    | '/fan/navigation'
+    | '/fan'
+  id:
+    | '__root__'
+    | '/'
+    | '/access-denied'
+    | '/fan'
+    | '/login'
+    | '/organizer'
+    | '/sitemap.xml'
+    | '/fan/assistant'
+    | '/fan/navigation'
+    | '/fan/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccessDeniedRoute: typeof AccessDeniedRoute
+  FanRoute: typeof FanRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  OrganizerRoute: typeof OrganizerRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organizer': {
+      id: '/organizer'
+      path: '/organizer'
+      fullPath: '/organizer'
+      preLoaderRoute: typeof OrganizerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fan': {
+      id: '/fan'
+      path: '/fan'
+      fullPath: '/fan'
+      preLoaderRoute: typeof FanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/access-denied': {
+      id: '/access-denied'
+      path: '/access-denied'
+      fullPath: '/access-denied'
+      preLoaderRoute: typeof AccessDeniedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +186,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fan/': {
+      id: '/fan/'
+      path: '/'
+      fullPath: '/fan/'
+      preLoaderRoute: typeof FanIndexRouteImport
+      parentRoute: typeof FanRoute
+    }
+    '/fan/navigation': {
+      id: '/fan/navigation'
+      path: '/navigation'
+      fullPath: '/fan/navigation'
+      preLoaderRoute: typeof FanNavigationRouteImport
+      parentRoute: typeof FanRoute
+    }
+    '/fan/assistant': {
+      id: '/fan/assistant'
+      path: '/assistant'
+      fullPath: '/fan/assistant'
+      preLoaderRoute: typeof FanAssistantRouteImport
+      parentRoute: typeof FanRoute
+    }
   }
 }
 
+interface FanRouteChildren {
+  FanAssistantRoute: typeof FanAssistantRoute
+  FanNavigationRoute: typeof FanNavigationRoute
+  FanIndexRoute: typeof FanIndexRoute
+}
+
+const FanRouteChildren: FanRouteChildren = {
+  FanAssistantRoute: FanAssistantRoute,
+  FanNavigationRoute: FanNavigationRoute,
+  FanIndexRoute: FanIndexRoute,
+}
+
+const FanRouteWithChildren = FanRoute._addFileChildren(FanRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccessDeniedRoute: AccessDeniedRoute,
+  FanRoute: FanRouteWithChildren,
+  LoginRoute: LoginRoute,
+  OrganizerRoute: OrganizerRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
