@@ -10,12 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as FanRouteImport } from './routes/fan'
 import { Route as AccessDeniedRouteImport } from './routes/access-denied'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FanIndexRouteImport } from './routes/fan.index'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FanRoute = FanRouteImport.update({
+  id: '/fan',
+  path: '/fan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccessDeniedRoute = AccessDeniedRouteImport.update({
@@ -28,34 +35,45 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FanIndexRoute = FanIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FanRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/access-denied': typeof AccessDeniedRoute
+  '/fan': typeof FanRouteWithChildren
   '/login': typeof LoginRoute
+  '/fan/': typeof FanIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/access-denied': typeof AccessDeniedRoute
   '/login': typeof LoginRoute
+  '/fan': typeof FanIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/access-denied': typeof AccessDeniedRoute
+  '/fan': typeof FanRouteWithChildren
   '/login': typeof LoginRoute
+  '/fan/': typeof FanIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/access-denied' | '/login'
+  fullPaths: '/' | '/access-denied' | '/fan' | '/login' | '/fan/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/access-denied' | '/login'
-  id: '__root__' | '/' | '/access-denied' | '/login'
+  to: '/' | '/access-denied' | '/login' | '/fan'
+  id: '__root__' | '/' | '/access-denied' | '/fan' | '/login' | '/fan/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccessDeniedRoute: typeof AccessDeniedRoute
+  FanRoute: typeof FanRouteWithChildren
   LoginRoute: typeof LoginRoute
 }
 
@@ -66,6 +84,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fan': {
+      id: '/fan'
+      path: '/fan'
+      fullPath: '/fan'
+      preLoaderRoute: typeof FanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/access-denied': {
@@ -82,12 +107,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fan/': {
+      id: '/fan/'
+      path: '/'
+      fullPath: '/fan/'
+      preLoaderRoute: typeof FanIndexRouteImport
+      parentRoute: typeof FanRoute
+    }
   }
 }
+
+interface FanRouteChildren {
+  FanIndexRoute: typeof FanIndexRoute
+}
+
+const FanRouteChildren: FanRouteChildren = {
+  FanIndexRoute: FanIndexRoute,
+}
+
+const FanRouteWithChildren = FanRoute._addFileChildren(FanRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccessDeniedRoute: AccessDeniedRoute,
+  FanRoute: FanRouteWithChildren,
   LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
