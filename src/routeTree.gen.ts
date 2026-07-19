@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as OrganizerRouteImport } from './routes/organizer'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FanRouteImport } from './routes/fan'
 import { Route as AccessDeniedRouteImport } from './routes/access-denied'
@@ -17,6 +18,11 @@ import { Route as FanIndexRouteImport } from './routes/fan.index'
 import { Route as FanNavigationRouteImport } from './routes/fan.navigation'
 import { Route as FanAssistantRouteImport } from './routes/fan.assistant'
 
+const OrganizerRoute = OrganizerRouteImport.update({
+  id: '/organizer',
+  path: '/organizer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/access-denied': typeof AccessDeniedRoute
   '/fan': typeof FanRouteWithChildren
   '/login': typeof LoginRoute
+  '/organizer': typeof OrganizerRoute
   '/fan/assistant': typeof FanAssistantRoute
   '/fan/navigation': typeof FanNavigationRoute
   '/fan/': typeof FanIndexRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/access-denied': typeof AccessDeniedRoute
   '/login': typeof LoginRoute
+  '/organizer': typeof OrganizerRoute
   '/fan/assistant': typeof FanAssistantRoute
   '/fan/navigation': typeof FanNavigationRoute
   '/fan': typeof FanIndexRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/access-denied': typeof AccessDeniedRoute
   '/fan': typeof FanRouteWithChildren
   '/login': typeof LoginRoute
+  '/organizer': typeof OrganizerRoute
   '/fan/assistant': typeof FanAssistantRoute
   '/fan/navigation': typeof FanNavigationRoute
   '/fan/': typeof FanIndexRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/access-denied'
     | '/fan'
     | '/login'
+    | '/organizer'
     | '/fan/assistant'
     | '/fan/navigation'
     | '/fan/'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/access-denied'
     | '/login'
+    | '/organizer'
     | '/fan/assistant'
     | '/fan/navigation'
     | '/fan'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '/access-denied'
     | '/fan'
     | '/login'
+    | '/organizer'
     | '/fan/assistant'
     | '/fan/navigation'
     | '/fan/'
@@ -114,10 +126,18 @@ export interface RootRouteChildren {
   AccessDeniedRoute: typeof AccessDeniedRoute
   FanRoute: typeof FanRouteWithChildren
   LoginRoute: typeof LoginRoute
+  OrganizerRoute: typeof OrganizerRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/organizer': {
+      id: '/organizer'
+      path: '/organizer'
+      fullPath: '/organizer'
+      preLoaderRoute: typeof OrganizerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -189,6 +209,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccessDeniedRoute: AccessDeniedRoute,
   FanRoute: FanRouteWithChildren,
   LoginRoute: LoginRoute,
+  OrganizerRoute: OrganizerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
